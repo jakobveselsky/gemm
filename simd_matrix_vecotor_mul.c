@@ -65,7 +65,7 @@ void matrix_vec_mult_avx(float *mat, uint32_t dim_size, float *vec, float *new_v
         row += dim_size; // go to next row of matrix
     }
     //printf("%lu\n", sizeof(new_vec));
-    for(int i = 0; i < dim_size; i++) { printf("%f\n", new_vec[i]); }
+    //for(int i = 0; i < dim_size; i++) { printf("%f\n", new_vec[i]); }
 }
 
 #elif __ARM_NEON
@@ -128,7 +128,7 @@ void matrix_multiply_neon(float32_t  *A, float32_t  *B, float32_t *C, uint32_t n
 }
 #endif
 
-void matrix_mult_basic(int n1, int n2, float32_t *A, float32_t *B, float32_t *C){
+void matrix_mult_basic(int n1, int n2, float *A, float *B, float *C){
     int i, j; // i = row, j = column
     for (i = 0; i < n2; i++) {
 	    for (j = 0; j < n1; j++) {
@@ -137,7 +137,7 @@ void matrix_mult_basic(int n1, int n2, float32_t *A, float32_t *B, float32_t *C)
     }
 }
 
-#define N 4000
+#define N 8000
 extern float mat[], vec[];
 float test_matrix[N*N];
 float test_vector[N];
@@ -149,8 +149,8 @@ int main()
 	time_t t;
 	srand((unsigned) time(&t));
 	int i, j;
- 	clock_t start, end;
-	double cpu_time_used;
+ 	clock_t start, end, start1, end1;
+	double cpu_time_used, cpu_time_used1;
 	for(i=0; i<N; i++) {
 		test_vector[i] = rand();
 		//test_vector[i] = 1.;
@@ -179,20 +179,23 @@ int main()
 	//x86 or arm gemm
 	start = clock();
 #ifdef __X86_SSE
-    	matrix_vec_mult_avx(mat, N, vec, new_vec);
+	matrix_vec_mult_avx(test_matrix, N, test_vector, new_vec);
+	end = clock();
+        cpu_time_used = ((double) (end - start))/CLOCKS_PER_SEC*1000;
+        printf("\n%fms x86\n", cpu_time_used);
 #elif __ARM_NEON
     	matrix_multiply_neon(test_matrix, test_vector, new_vec, N, N, N);
+	end = clock();
+        cpu_time_used = ((double) (end - start))/CLOCKS_PER_SEC*1000;
+        printf("\n%fms arm\n", cpu_time_used);
 #endif
-    	end = clock();
-    	cpu_time_used = ((double) (end - start))/CLOCKS_PER_SEC*1000;
-    	printf("\n%fms\n x86 or arm", cpu_time_used);
     	
 	//unvectorized gemm
-	start = clock();
+	start1 = clock();
 	matrix_mult_basic(N, N, test_vector, test_matrix, new_vec2);
-	end = clock();
-	cpu_time_used =((double) (end - start))/CLOCKS_PER_SEC*1000;
-	printf("\n%fms\n unvectorized");
+	end1 = clock();
+	cpu_time_used1 =((double) (end1 - start1))/CLOCKS_PER_SEC*1000;
+	printf("\n%fms unvectorized\n", cpu_time_used1);
 
 	return 0;
 }
