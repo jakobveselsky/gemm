@@ -137,7 +137,17 @@ void matrix_mult_basic(int n1, int n2, float *A, float *B, float *C){
     }
 }
 
-#define N 32
+void matrix_mult_omp(int n1, int n2, float *A, float *B, float *C){
+    int i, j; // i = row, j = column
+    #pragma omp parallel for reduction(+:C)
+    for (i = 0; i < n2; i++) {
+            for (j = 0; j < n1; j++) {
+                    C[j] += B[n1*i + j] * A[i];
+            }
+    }
+}
+
+#define N 64 
 extern float mat[], vec[];
 float test_matrix[N*N];
 float test_vector[N];
@@ -182,20 +192,27 @@ int main()
 	matrix_vec_mult_avx(test_matrix, N, test_vector, new_vec);
 	end = clock();
         cpu_time_used = ((double) (end - start))/CLOCKS_PER_SEC*1000;
-        printf("\n%fms x86\n", cpu_time_used);
+        printf("%fms x86\n", cpu_time_used);
 #elif __ARM_NEON
     	matrix_multiply_neon(test_matrix, test_vector, new_vec, N, N, N);
 	end = clock();
         cpu_time_used = ((double) (end - start))/CLOCKS_PER_SEC*1000;
-        printf("\n%fms arm\n", cpu_time_used);
+        printf("%fms arm\n", cpu_time_used);
 #endif
     	
+	//unvectorized gemm
+        start1 = clock();
+        matrix_mult_omp(N, N, test_vector, test_matrix, new_vec2);
+        end1 = clock();
+        cpu_time_used1 =((double) (end1 - start1))/CLOCKS_PER_SEC*1000;
+        printf("%fms omp\n", cpu_time_used1);
+
 	//unvectorized gemm
 	start1 = clock();
 	matrix_mult_basic(N, N, test_vector, test_matrix, new_vec2);
 	end1 = clock();
 	cpu_time_used1 =((double) (end1 - start1))/CLOCKS_PER_SEC*1000;
-	printf("\n%fms unvectorized\n", cpu_time_used1);
+	printf("%fms unvectorized\n", cpu_time_used1);
 
 	return 0;
 }
