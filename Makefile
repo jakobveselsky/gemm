@@ -1,13 +1,14 @@
 CC = gcc
 UNAME_P := $(shell uname -p)
-CFLAGS= -march=native -D__X86_SSE -O1 -lm
+CFLAGS= -march=native -D__X86_SSE -O1 -lm -lpthread -g
 
-all: simd_matrix_vecotor_mul
+all: simd_matrix_vecotor_mul vector_simd
 
 clean:
 	rm -f simd_matrix_vecotor_mul-no-omp.o
 	rm -f simd_matrix_vecotor_mul-openmp.o
 	rm -f simd_matrix_vecotor_mul-openmp-simd.o
+	rm -f vector_simd.o
 
 simd_matrix_vecotor_mul: simd_matrix_vecotor_mul.c
     ifeq ($(UNAME_P),x86_64)
@@ -18,3 +19,8 @@ simd_matrix_vecotor_mul: simd_matrix_vecotor_mul.c
     ifeq ($(UNAME_P),ARM)
 		aarch64-linux-gnu-gcc -oeigtest eig_vec_decomp.c mat_aarch64.o -D__ARM_NEON -g -O1 -lm
     endif
+
+vector_simd: vector_simd.c
+     ifeq ($(UNAME_P),x86_64)
+		$(CC) -o vector_simd.o vector_simd.c $(CFLAGS)
+     endif

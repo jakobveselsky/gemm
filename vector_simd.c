@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "vector_simd.h"
 
 #ifdef __ARM_NEON
 #include <arm_neon.h>
@@ -9,7 +9,7 @@
 
 #define N 32
 #define NROUNDS 1000
-#define THREADS 2
+#define THREADS 1
 #define CHUNK 32
 
 float test_matrix[N*N];
@@ -137,113 +137,59 @@ void matrix_multiply_neon(float32_t  *A, float32_t  *B, float32_t *C, uint32_t n
 }
 #endif
 
-void matrix_mult_basic(int col, int row, float *x, float *A, float *y){
-	for (int i = 0; i < col; i++) {  //columns
-		for (int j = 0; j < row; j++) {  //rows
-			y[j] += A[col*i + j] * x[i]; //y = Ax
-		}
-    	}
-}
-
 void vector_mult_basic(int id){
-	//printf("Thread ID: %d\n", id);
 	for (int i = 0; i < N; i++) { 
-        	new_vec[i] += test_matrix[(id)*N + i] * test_vector[i]; //y = Ax
+        	new_vec[i] += test_matrix[(id)*N + i] * test_vector[i];
         }
 }
 
 void *thread_work(void *vargp){
-	for(int y = 0; y < NROUNDS; y++){
-                int *myid = (int *)vargp;
-		vector_mult_basic(myid);
-        }
-}
-
-void matrix_mult_threaded(int n, float *x, float *A, float *y){
-	pthread_t tid;
-	for (int i = 0; i < THREADS; i++){ pthread_create(&tid, NULL, thread_work, (void *)i); }
-}
-
-void matrix_mult_omp(int n, float *x, float *A, float *y){
-	#pragma omp parallel for schedule(dynamic, CHUNK) num_threads(THREADS)
-        for (int i = 0; i < n; i++) {  //columns
-                for (int j = 0; j < n; j++) {  //rows
-                        y[j] += A[n*i + j] * x[i]; //y = Ax
-                }
-        }
+        struct Thread_simd *t = (struct Thread_simd *)vargp;
+	if(t->do_mult != 0)
+	{
+		vector_mult_basic(t->index);
+		t -> do_mult = 0;
+	}
 }
 
 void main()
 {
 	//declaration
-	time_t t;
-	//srand((unsigned) time(&t));
- 	clock_t start, end;
-	double cpu_time_used;
-	
+	pthread_t tid[THREADS];
+	struct Thread_simd t[THREADS];
+	clock_t start, end;
+	float cpu_time_used;
+	int count = 1;
+
 	//initalizations
 	for(int i=0; i<N; i++) {
 		test_vector[i] = rand();
 		//test_vector[i] = 1.;
 		for(int j=0; j<N; j++){
-        		//test_matrix[i+j] = rand();
             		if(i == j) { test_matrix[i*N+j] = 1.; }
 		       	else { test_matrix[i*N+j] = 0.; }
 		}
 	}
-
-	//printing of matrix and vector
- 	printf("Test Vector:\n");
-	for (int q = 0; q < N; q++) { 
-		printf("%d, %f\n", q, test_vector[q]); 
-    	}
-    	//printf("Test Matrix:\n");
-    	//for (int r = 0; r < N; r++) {
-	//	for (int s = 0; s < N; s++) {
-	//		printf("%f ", test_matrix[r*N + s]);
-	//	}
-    	//	printf("\n");
-    	//}
-    	//printf("\n");
-    	//printf("done making test matrix!");
-    	
-	//benchmarking
-	//x86 or arm simd
-	cpu_time_used = 0.;
-#ifdef __X86_SSE
-	for(int x = 0; x < NROUNDS; x++){
-		start = clock();
-		matrix_vec_mult_avx(test_matrix, N, test_vector, new_vec);
-		end = clock();
-		cpu_time_used += ((double) (end - start))/CLOCKS_PER_SEC*1000;
-	}
-        printf("%fms x86\n", cpu_time_used/NROUNDS);
-#elif __ARM_NEON
-	for(int x = 0; x < NROUNDS; x++){
-		start = clock();
-		matrix_multiply_neon(test_matrix, test_vector, new_vec, N, N, N);
-		end = clock();
-		cpu_time_used += ((double) (end - start))/CLOCKS_PER_SEC*1000;
-	}
-        printf("%fms arm\n", cpu_time_used/NROUNDS);
-#endif
-    
-	//serial
-        cpu_time_used = 0.;
-        for(int z = 0; z < NROUNDS; z++){
-                start = clock();
-                matrix_mult_basic(N, N, test_vector, test_matrix, new_vec);
-                end = clock();
-                cpu_time_used +=((double) (end - start))/CLOCKS_PER_SEC*1000;
+        for(int i = 0; i < THREADS; i++){
+                t[i].do_mult = 1;
         }
-        printf("%fms serial\n", cpu_time_used/NROUNDS);
+	for (int i = 0; i < THREADS; i++){ 
+		t[i].do_mult = 0;
+		t[i].index = i;
+		pthread_create(&tid[i], NULL, thread_work, (void *)&t[i]); 
+	}
 
-	//threaded
-	cpu_time_used = 0.;
+	//timing
 	start = clock();
-	matrix_mult_threaded(N, test_vector, test_matrix, new_vec);
+	while(count !=0){
+		count = 0;
+		for(int i = 0; i < THREADS; i++){
+                	count += t[i].do_mult;
+        	}
+	}
 	end = clock();
-        cpu_time_used +=((double) (end - start))/CLOCKS_PER_SEC*1000;
-	printf("%fms threads\n", cpu_time_used/NROUNDS);
+	cpu_time_used += ((double) (end - start))/CLOCKS_PER_SEC*1000;
+	printf("%fms serial\n", cpu_time_used);
 	pthread_exit(NULL);
+
 }
