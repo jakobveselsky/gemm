@@ -7,9 +7,9 @@
 #include <immintrin.h>
 #endif
 
-#define N 32
+#define N 3200
 #define NROUNDS 1000
-#define THREADS 2
+#define THREADS 32
 #define CHUNK 32
 
 float test_matrix[N*N];
@@ -240,10 +240,17 @@ void main()
 
 	//threaded
 	cpu_time_used = 0.;
-	start = clock();
-	matrix_mult_threaded(N, test_vector, test_matrix, new_vec);
-	end = clock();
-        cpu_time_used +=((double) (end - start))/CLOCKS_PER_SEC*1000;
-	printf("%fms threads\n", cpu_time_used/NROUNDS);
-	pthread_exit(NULL);
+	//start = clock();
+	//matrix_mult_threaded(N, test_vector, test_matrix, new_vec);
+	//end = clock();
+        //cpu_time_used +=((double) (end - start))/CLOCKS_PER_SEC*1000;
+	//printf("%fms threads\n", cpu_time_used/NROUNDS);
+	//pthread_exit(NULL);
+	for(int z = 0; z < NROUNDS; z++){
+                start = clock();
+                matrix_mult_omp(N, test_vector, test_matrix, new_vec);
+                end = clock();
+                cpu_time_used +=((double) (end - start))/CLOCKS_PER_SEC*1000;
+        }
+        printf("%fms omp\n", cpu_time_used/NROUNDS);
 }

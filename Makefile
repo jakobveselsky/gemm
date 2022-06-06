@@ -20,7 +20,7 @@ simd_matrix_vecotor_mul: simd_matrix_vecotor_mul.c
 		aarch64-linux-gnu-gcc -oeigtest eig_vec_decomp.c mat_aarch64.o -D__ARM_NEON -g -O1 -lm
     endif
 
-vector_simd: vector_simd.c
+threads: threads.c
      ifeq ($(UNAME_P),x86_64)
-		$(CC) -o vector_simd.o vector_simd.c $(CFLAGS)
+		$(CC) -o threads.o threads.c $(CFLAGS)
      endif
