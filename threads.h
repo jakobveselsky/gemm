@@ -1,5 +1,5 @@
-#ifndef _THREADSIMD_H
-#define _THREADSIMD_H
+#ifndef _THREADS_H
+#define _THREADS_H
 
 //define included libaries
 #include <stdint.h>
@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <pthread.h>
 
-struct Thread_simd {
+struct Thread_info {
    int do_mult;
    int index;
 };
