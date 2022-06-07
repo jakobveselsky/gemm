@@ -16,9 +16,13 @@ void vector_mult_basic(int index){
 }
 
 void *thread_work(void *vargp){
-        struct Thread_info *t_info = (struct Thread_info *)vargp;
-	for(int i =0; i<NROUNDS; i++){ vector_mult_basic(t_info->index); }
-	t_info -> do_mult = 0;
+        volatile struct Thread_info *t_info = (struct Thread_info *)vargp;
+	while(1){	
+		if(t_info -> do_mult == 1){
+			vector_mult_basic(t_info->index); 
+			t_info -> do_mult = 0;
+		}
+	}
 }
 
 void main()
@@ -35,22 +39,25 @@ void main()
 		for(int j=0; j<N; j++){ test_matrix[i*N+j] = rand(); }
 	}
 	for (int i = 0; i<THREADS; i++){ 
-		t_info[i].do_mult = 1;
+		t_info[i].do_mult = 0;
 		t_info[i].index = i;
 		pthread_create(&t[i], NULL, thread_work, (void *)&t_info[i]); 
 	}
 
 	//timing
 	start = clock(); //logs time before matrix vector multiplaction
-	while(count !=0){
-		count = 0;
-		for(int i = 0; i < THREADS; i++){
-			count += t_info[i].do_mult;
-        	}
-	}
+	for(int i = 0; i < NROUNDS; i++){
+		for (int i = 0; i<THREADS; i++){ t_info[i].do_mult = 1; }
+		while(count !=0){
+			count = 0;
+			for(int i = 0; i < THREADS; i++){
+				t_info[i].do_mult;
+        		}
+		}
+	}		
 	end = clock(); //logs time after matrix vector multiplaction
-	cpu_time_used += ((float) (end - start))/CLOCKS_PER_SEC*1000000; 
+	cpu_time_used += ((float) (end - start))/CLOCKS_PER_SEC*1000; 
 	cpu_time_used = cpu_time_used/NROUNDS; //divides total time used by rounds completed
-	printf("%f microseconds serial\n", cpu_time_used); //prints time used on matrix vector multiplaction
+	printf("%f ms \n", cpu_time_used); //prints time used on matrix vector multiplaction
 	pthread_exit(NULL); //kills all threads
 }
