@@ -1,14 +1,17 @@
 CC = gcc
 UNAME_P := $(shell uname -p)
-CFLAGS=  -O1 -lm -lpthread
+CFLAGS=  -O1 -lm -lpthread -g
 
-all: simd_matrix_vecotor_mul threads
+all: simd threads
 
 clean:
 	rm -f simd_matrix_vecotor_mul-no-omp.o
 	rm -f simd_matrix_vecotor_mul-openmp.o
 	rm -f simd_matrix_vecotor_mul-openmp-simd.o
 	rm -f threads.o
+
+simd: simd.c
+	$(CC) -o simd.o simd.c $(CFLAGS)
 
 simd_matrix_vecotor_mul: simd_matrix_vecotor_mul.c
     ifeq ($(UNAME_P),x86_64)

@@ -74,48 +74,26 @@ void matrix_vec_mult_avx(float *mat, uint32_t dim_size, float *vec, float *new_v
 
 #elif __ARM_NEON
 void matrix_multiply_neon(float32_t  *A, float32_t  *B, float32_t *C, uint32_t n, uint32_t m, uint32_t k) {
-        int A_idx;
-        int B_idx;
-        int C_idx;
+        float32x4_t matrix; //{ 1.0, 2.0, 3.0, 4.0 }
+        float32x4_t vector; //{ 1.0, 2.0, 3.0, 4.0 }
+        float32x4_t ans; //{ 1.0, 2.0, 3.0, 4.0 }
         
-        // these are the columns of a 4x4 sub matrix of A
-        float32x4_t A0;
-        float32x4_t A1;
-        float32x4_t A2;
-        float32x4_t A3;
-        
-        // these are the columns of a 4x1 sub matrix of B
-        float32x4_t B0;
-        
-        // these are the columns of a 4x1 sub matrix of C
-        float32x4_t C0;
-        
-        for (int i_idx=0; i_idx<n; i_idx+=4) {
-                for (int j_idx=0; j_idx<m; j_idx+=4) {
-                        // Zero accumulators before matrix op
-                        C0 = vmovq_n_f32(0);
-                        for (int k_idx=0; k_idx<k; k_idx+=4) {
-                                // Compute base index to 4x4 block
-                                A_idx = i_idx + n*k_idx;
-                                B_idx = k*j_idx + k_idx;
-                                
-                                // Load most current A values in row 
-                                A0 = vld1q_f32(A+A_idx);
-                                A1 = vld1q_f32(A+A_idx+n);
-                                A2 = vld1q_f32(A+A_idx+2*n);
-                                A3 = vld1q_f32(A+A_idx+3*n);
-                                
-                                // Multiply accumulate in 4x1 blocks, i.e. each column in C
-                                B0 = vld1q_f32(B+B_idx);
-                                C0 = vfmaq_laneq_f32(C0, A0, B0, 0);
-                                C0 = vfmaq_laneq_f32(C0, A1, B0, 1);
-                                C0 = vfmaq_laneq_f32(C0, A2, B0, 2);
-                                C0 = vfmaq_laneq_f32(C0, A3, B0, 3);
-                                
-                        }
+        for (int i=0; i<n; i+=m) { //col
+                for (int j=0; j<m; j+=4) { //row
+                	// Zero accumulators before matrix op
+                        ans = vmovq_n_f32(0.0); // { 0.0, 0.0, 0.0, 0.0 }             
+      			
+                         // Load most current A values in row 
+                        matrix = vld1q_f32(A+j+(i*n));        
+                        //vector = vld1q_f32(B+j+(i*n));
+                        
+			//printf("%v4hlf\n",matrix);
+				
+			//C = vfmaq_laneq_f32(C, A, B, 0);
+                     
                         // Compute base index for stores
-                        C_idx = n*j_idx + i_idx;
-                        vst1q_f32(C+C_idx, C0);
+                        //C_idx = n*j_idx + i_idx;
+                        //vst1q_f32(C+C_idx, C0);
                 }
         }
 }
@@ -123,16 +101,18 @@ void matrix_multiply_neon(float32_t  *A, float32_t  *B, float32_t *C, uint32_t n
 
 void random_vector_matrix(int N){
 	for(int i=0; i<N; i++) {
-		test_vector[i] = rand();
+		//test_vector[i] = rand();
+		test_vector[i] = i;
 		for(int j=0; j<N; j++){
-			test_matrix[i+j] = rand();
+			//test_matrix[i+N*j] = rand();
+			test_matrix[i+N*j] = j;
 		}
 	}
 }
 
 void print_vector_matrix(int N){
 	printf("Test Vector:\n");
-	for (int q = 0; q < N; q++) { printf("%d, %f\n", q, test_vector[q]); }
+	for (int q = 0; q < N; q++) { printf("%f\n", test_vector[q]); }
 	printf("Test Matrix:\n");
 	for (int r = 0; r < N; r++) {
 		for (int s = 0; s < N; s++) {
