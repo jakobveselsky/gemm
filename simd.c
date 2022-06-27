@@ -78,23 +78,18 @@ void matrix_multiply_neon(float32_t  *A, float32_t  *B, float32_t *C, uint32_t n
         float32x4_t vector; //{ 1.0, 2.0, 3.0, 4.0 }
         float32x4_t ans; //{ 1.0, 2.0, 3.0, 4.0 }
         
-        for (int i=0; i<n; i+=m) { //col
+        for (int i=0; i<n; i++) { //col
                 for (int j=0; j<m; j+=4) { //row
-                	// Zero accumulators before matrix op
-                        ans = vmovq_n_f32(0.0); // { 0.0, 0.0, 0.0, 0.0 }             
-      			
-                         // Load most current A values in row 
-                        matrix = vld1q_f32(A+j+(i*n));        
-                        //vector = vld1q_f32(B+j+(i*n));
                         
-			//printf("%v4hlf\n",matrix);
-				
-			//C = vfmaq_laneq_f32(C, A, B, 0);
-                     
-                        // Compute base index for stores
-                        //C_idx = n*j_idx + i_idx;
-                        //vst1q_f32(C+C_idx, C0);
+			ans = vmovq_n_f32(0.0); // { 0.0, 0.0, 0.0, 0.0 }             
+      			
+                        matrix = vld1q_f32(A+j+(i*n));        
+                        
+			vector = vld1q_f32(B);
+                        
+			ans = vfmaq_f32(ans, matrix, vector);
                 }
+		C[i] = vaddvq_f32(ans);
         }
 }
 #endif
@@ -102,10 +97,10 @@ void matrix_multiply_neon(float32_t  *A, float32_t  *B, float32_t *C, uint32_t n
 void random_vector_matrix(int N){
 	for(int i=0; i<N; i++) {
 		//test_vector[i] = rand();
-		test_vector[i] = i;
+		test_vector[i] = i+1;
 		for(int j=0; j<N; j++){
 			//test_matrix[i+N*j] = rand();
-			test_matrix[i+N*j] = j;
+			test_matrix[i+N*j] = j+1;
 		}
 	}
 }
