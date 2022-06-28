@@ -7,7 +7,7 @@
 #include <immintrin.h>
 #endif
 
-#define NROUNDS 1
+#define NROUNDS 1000000
 
 float test_matrix[1000*1000];
 float test_vector[1000];
@@ -77,18 +77,19 @@ void matrix_multiply_neon(float32_t  *A, float32_t  *B, float32_t *C, uint32_t n
         float32x4_t matrix; //{ 1.0, 2.0, 3.0, 4.0 }
         float32x4_t vector; //{ 1.0, 2.0, 3.0, 4.0 }
         float32x4_t ans; //{ 1.0, 2.0, 3.0, 4.0 }
-        
+       
+	ans = vmovq_n_f32(0.0); // { 0.0, 0.0, 0.0, 0.0 }
+
         for (int i=0; i<n; i++) { //col
                 for (int j=0; j<m; j+=4) { //row
                         
-			ans = vmovq_n_f32(0.0); // { 0.0, 0.0, 0.0, 0.0 }             
-      			
-                        matrix = vld1q_f32(A+j+(i*n));        
+			matrix = vld1q_f32(A+j+(i*n));        
                         
-			vector = vld1q_f32(B);
+			vector = vld1q_f32(B+j);
                         
 			ans = vfmaq_f32(ans, matrix, vector);
-                }
+		}
+		
 		C[i] = vaddvq_f32(ans);
         }
 }
@@ -98,6 +99,7 @@ void random_vector_matrix(int N){
 	for(int i=0; i<N; i++) {
 		//test_vector[i] = rand();
 		test_vector[i] = i+1;
+		new_vec[i] = 0;
 		for(int j=0; j<N; j++){
 			//test_matrix[i+N*j] = rand();
 			test_matrix[i+N*j] = j+1;
@@ -151,7 +153,7 @@ int main(int argc, char *argv[]){
 		end = clock();
 		cpu_time_used += ((double) (end - start))/CLOCKS_PER_SEC*1000000;
 	}
-        printf("%fµs arm\n", cpu_time_used/NROUNDS);
+        printf("%f\n", cpu_time_used/NROUNDS); //µs arm
 #endif
 	return 0;
 }
