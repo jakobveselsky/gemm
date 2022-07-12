@@ -10,6 +10,9 @@ clean:
 	rm -f simd_matrix_vecotor_mul-openmp-simd.o
 	rm -f threads.o
 
+threads: threads.c
+	$(CC) -o threads.o threads.c $(CFLAGS)
+
 simd: simd.c
 	$(CC) -o simd.o simd.c $(CFLAGS)
 

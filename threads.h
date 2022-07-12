@@ -14,6 +14,7 @@
 struct Thread_info {
    int do_mult;
    int index;
+   int N;
 };
 
 #endif
