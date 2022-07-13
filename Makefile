@@ -1,6 +1,6 @@
 CC = gcc
 UNAME_P := $(shell uname -p)
-CFLAGS=  -O0 -lm -lpthread -g
+CFLAGS=  -O0 -lm #-lpthread -g
 
 all: simd threads
 
@@ -17,7 +17,7 @@ pthreads: pthreads.c
 	$(CC) -o pthreads.o pthreads.c $(CFLAGS)
 
 simd: simd.c
-	gcc -o simd.o simd.c
+	$(CC) -o simd.o simd.c $(CFLAGS)
 
 serial: serial.c
 	$(CC) -o serial.o serial.c $(CFLAGS)

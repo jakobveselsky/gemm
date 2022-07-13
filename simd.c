@@ -7,7 +7,7 @@
 #include <immintrin.h>
 #endif
 
-#define NROUNDS 10000
+#define NROUNDS 1000
 
 float test_matrix[1000*1000];
 float test_vector[1000];

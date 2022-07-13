@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-neon = pd.read_csv('data.csv', sep=', ')
+neon = pd.read_csv('neon.csv', sep=', ')
 serial = pd.read_csv('serial.csv', sep=', ')
 
 print("serial")
@@ -14,7 +14,7 @@ plt.plot(neon["N"],neon["time"], label='neon')
 plt.plot(serial["N"],serial["time"], label='serial')
 plt.title('serial vs neon')
 plt.xlabel('N')
-plt.ylabel('time')
+plt.ylabel('Time')
 plt.grid(True)
 plt.legend()
 plt.show()

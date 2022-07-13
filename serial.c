@@ -1,10 +1,10 @@
 #include "headers.h"
 
-#define NROUNDS 10000
+#define NROUNDS 1000
 
 float test_matrix[1000*1000];
 float test_vector[1000];
-float new_vec[100];
+float new_vec[1000];
 
 void matrix_mult_basic(int col, int row, float *x, float *A, float *y){
 	for (int i = 0; i < col; i++) {  //columns
