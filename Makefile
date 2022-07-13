@@ -10,11 +10,17 @@ clean:
 	rm -f simd_matrix_vecotor_mul-openmp-simd.o
 	rm -f threads.o
 
-threads: threads.c
-	$(CC) -o threads.o threads.c $(CFLAGS)
+omp_threads: omp_threads.c
+	$(CC) -o omp_threads.o omp_threads.c $(CFLAGS)
+
+pthreads: pthreads.c
+	$(CC) -o pthreads.o pthreads.c $(CFLAGS)
 
 simd: simd.c
-	$(CC) -o simd.o simd.c $(CFLAGS)
+	gcc -o simd.o simd.c
+
+serial: serial.c
+	$(CC) -o serial.o serial.c $(CFLAGS)
 
 simd_matrix_vecotor_mul: simd_matrix_vecotor_mul.c
     ifeq ($(UNAME_P),x86_64)

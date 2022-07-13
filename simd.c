@@ -7,7 +7,7 @@
 #include <immintrin.h>
 #endif
 
-#define NROUNDS 1000000
+#define NROUNDS 10000
 
 float test_matrix[1000*1000];
 float test_vector[1000];
@@ -151,7 +151,7 @@ int main(int argc, char *argv[]){
 		start = clock();
 		matrix_multiply_neon(test_matrix, test_vector, new_vec, N, N, N);
 		end = clock();
-		cpu_time_used += ((double) (end - start))/CLOCKS_PER_SEC*1000000;
+		cpu_time_used += ((double) (end - start))/CLOCKS_PER_SEC*1000;
 	}
         printf("%f\n", cpu_time_used/NROUNDS); //µs arm
 #endif

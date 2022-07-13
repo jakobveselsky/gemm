@@ -1,7 +1,7 @@
 #include "threads.h"
 
 //#define N 32 //defines dimensions of array and vector
-#define NROUNDS 100 //defines how many rounds of matrix vector multiplaction is to be done
+#define NROUNDS 10000 //defines how many rounds of matrix vector multiplaction is to be done
 #define THREADS 32 //defines how many threads will be made
 
 //global variables
@@ -63,6 +63,6 @@ int main(int argc, char *argv[])
 	cpu_time_used += ((float) (end - start))/CLOCKS_PER_SEC*1000; 
 	cpu_time_used = cpu_time_used/NROUNDS; //divides total time used by rounds completed
 	printf("%f ms \n", cpu_time_used); //prints time used on matrix vector multiplaction
-	pthread_exit(NULL); //kills all threads
+	//pthread_exit(NULL); //kills all threads
 	return 0;
 }
