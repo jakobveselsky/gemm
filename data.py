@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 neon = pd.read_csv('neon.csv', sep=', ')
 serial = pd.read_csv('serial.csv', sep=', ')
-omp = pd.read_csv('omp_threads.csv', sep', ')
+omp = pd.read_csv('omp_threads.csv', sep=', ')
 
 print("serial")
 print(serial)
