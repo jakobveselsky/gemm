@@ -1,7 +1,7 @@
 #include "headers.h"
 
 #define NROUNDS 1000
-#define THREADS 4
+#define THREADS 3
 #define CHUNK 4
 
 float test_matrix[1000*1000];

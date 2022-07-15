@@ -1,5 +1,5 @@
 #!/bin/bash
-for i in $(seq 4 4 996)
+for i in $(seq 3 3 999)
 do
-	echo $i, $(./omp_threads.o $i)     
+	echo $i, $(./pthreads.o $i)     
 done
