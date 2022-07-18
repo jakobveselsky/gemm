@@ -68,7 +68,7 @@ void init_vector_matrix(int N){
 	for(int i=0; i<N; i++) {
 		test_vector[i] = rand();
 		for(int j=0; j<N; j++){
-			test_matrix[i+j] = rand();
+			test_matrix[i*N+j] = rand();
 		}
 	}
 }
