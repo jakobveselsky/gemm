@@ -1,0 +1,69 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 4M of event 'instructions'
+# Event count (approx.): 3835827966847
+#
+# Overhead  Command     Shared Object       Symbol                                 
+# ........  ..........  ..................  .......................................
+#
+    42.60%  pthreads.o  pthreads.o          [.] vector_mult_basic
+    34.85%  pthreads.o  pthreads.o          [.] thread_work
+    22.55%  pthreads.o  pthreads.o          [.] main
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] __softirqentry_text_start
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] _raw_spin_unlock_irqrestore
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] finish_task_switch
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] rcu_nocb_unlock_irqrestore.isra.56
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] arch_local_irq_restore
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] _raw_spin_unlock_irq
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] arch_local_irq_restore
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] raise_softirq
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] __local_bh_enable_ip
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] update_blocked_averages
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] do_notify_resume
+     0.00%  pthreads.o  libc-2.31.so        [.] __aarch64_swp4_rel
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] rcu_cblist_dequeue
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] slabinfo_write
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] preempt_count_sub
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] note_gp_changes
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] load_balance
+     0.00%  pthreads.o  libc-2.31.so        [.] __aarch64_cas4_acq
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] _find_next_bit
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] arch_local_irq_enable
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] rcu_core
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] __local_bh_disable_ip
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] rcu_work_rcufn
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] rcu_preempt_deferred_qs
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] ___bpf_prog_run
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] tcp_parse_aligned_timestamp.part.61
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] cubictcp_recalc_ssthresh
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] update_group_capacity
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] tasklet_action_common.isra.25
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] napi_complete_done
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] rcu_segcblist_ready_cbs
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] fpsimd_load_state
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] queue_work_on
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] __sched_text_start
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] mod_timer
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] unmap_page_range
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] __tcp_retransmit_skb
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] run_timer_softirq
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] fput
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] rebalance_domains
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] _raw_read_unlock_irqrestore
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] find_busiest_group
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] account_kernel_stack
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] call_timer_fn
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] preempt_count_add
+     0.00%  pthreads.o  ld-2.31.so          [.] strcmp
+     0.00%  pthreads.o  [kernel.kallsyms]   [k] get_page_from_freelist
+     0.00%  pthreads.o  libpthread-2.31.so  [.] start_thread
+     0.00%  perf_5.10   [kernel.kallsyms]   [k] perf_lock_task_context
+     0.00%  perf_5.10   [kernel.kallsyms]   [k] perf_event_exec
+
+
+#
+# (Tip: Limit to show entries above 5% only: perf report --percent-limit 5)
+#
