@@ -4,10 +4,9 @@
 
 void bounded_buffer_init(bounded_buffer_t* bb, int size)
 {
-    bb->entries = (entry_t**) malloc(size * sizeof(entry_t*));
-    for (int i=0; i < size; i++)
+    bb->entries = (entry_t**) malloc(1000 * sizeof(entry_t*));
+    for (int i=0; i < 1000; i++)
         bb->entries[i] = NULL;
-    bb->size = size;
     bb->head = bb->tail = 0;
     pthread_mutex_init(&bb->lock, NULL);
     pthread_cond_init (&bb->has_space, NULL);
