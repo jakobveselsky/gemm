@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.3
 # Built for aarch64-unknown-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Aug  5 14:38:09 2022
+# Make data base, printed on Fri Aug  5 16:01:52 2022
 
 # Variables
 
@@ -20,8 +22,6 @@ MAKE_COMMAND := make
 VSCODE_HANDLES_SIGPIPE = true
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
-# makefile (from 'Makefile', line 2)
-UNAME_P := aarch64
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -58,8 +58,8 @@ MFLAGS = -pqrR
 .SHELLFLAGS := -c
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
-# makefile (from 'Makefile', line 1)
-MAKEFILE_LIST := Makefile
+# makefile
+MAKEFILE_LIST := 
 # automatic
 @F = $(notdir $@)
 # environment
@@ -111,23 +111,19 @@ BROWSER = /home/jakob/.vscode-server/bin/3b889b090b5ad5793f524b5d1d39fda662b96a2
 # environment
 LOGNAME = jakob
 # makefile
-.DEFAULT_GOAL := all
+.DEFAULT_GOAL := 
 # environment
 USER = jakob
 # default
 MAKE_VERSION := 4.3
-# 'override' directive
-.SHELLSTATUS := 0
 # environment
 VSCODE_AGENT_FOLDER = /home/jakob/.vscode-server
 # environment
 _ = /home/jakob/.vscode-server/bin/3b889b090b5ad5793f524b5d1d39fda662b96a2a/node
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
-# makefile (from 'Makefile', line 3)
-CFLAGS = -O0 -lm -lpthread -g
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-e6df0e20-0e7b-4ef5-90ae-dbab285eecd1.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-8d1434d8-2536-425d-a476-5572eb960b6e.sock
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -146,12 +142,10 @@ XDG_SESSION_ID = 4
 SUFFIXES := 
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
-# makefile (from 'Makefile', line 1)
-CC = gcc
 # environment
 SSH_CONNECTION = 192.168.64.1 50227 192.168.64.7 22
 # variable set hash-table stats:
-# Load=70/1024=7%, Rehash=0, Collisions=5/111=5%
+# Load=66/1024=6%, Rehash=0, Collisions=1/93=1%
 
 # Pattern-specific Variable Values
 
@@ -159,9 +153,9 @@ SSH_CONNECTION = 192.168.64.1 50227 192.168.64.7 22
 
 # Directories
 
-# . (device 64514, inode 2626669): 36 files, no impossibilities.
+# . (device 64514, inode 2626669): 11 files, no impossibilities.
 
-# 36 files, no impossibilities in 1 directories.
+# 11 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -170,73 +164,11 @@ SSH_CONNECTION = 192.168.64.1 50227 192.168.64.7 22
 # Files
 
 # Not a target:
-simd_matrix_vecotor_mul.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-queuepthreads: queuepthreads.c
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'Makefile', line 20):
-	$(CC) -o queuepthreads.o queuepthreads.c $(CFLAGS)
-
-# Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-04 15:58:19.066267505
-#  File has been updated.
-#  Successfully updated.
-
-serial: serial.c
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'Makefile', line 26):
-	$(CC) -o serial.o serial.c $(CFLAGS)
-
-threads: threads.c
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-clean:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'Makefile', line 8):
-	rm -f simd_matrix_vecotor_mul-no-omp.o
-	rm -f simd_matrix_vecotor_mul-openmp.o
-	rm -f simd_matrix_vecotor_mul-openmp-simd.o
-	rm -f threads.o
-
-simd: simd.c
-#  Implicit rule search has not been done.
-#  Implicit/static pattern stem: ''
 #  File does not exist.
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := simd
-# automatic
-# * := 
-# automatic
-# < := simd.c
-# automatic
-# + := simd.c
-# automatic
-# % := 
-# automatic
-# ^ := simd.c
-# automatic
-# ? := simd.c
-# automatic
-# | := 
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=2/13=15%
-#  recipe to execute (from 'Makefile', line 23):
-	$(CC) -o simd.o simd.c $(CFLAGS)
+#  Failed to be updated.
 
 # Not a target:
 .DEFAULT:
@@ -244,91 +176,41 @@ simd: simd.c
 #  Modification time never checked.
 #  File has not been updated.
 
-all: simd threads
+# Not a target:
+all:
 #  Command line target.
 #  Implicit rule search has been done.
 #  File does not exist.
-#  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
-
-pthreads: pthreads.c
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'Makefile', line 17):
-	$(CC) -o pthreads.o pthreads.c $(CFLAGS)
-
-# Not a target:
-omp_threads.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
 #  File has not been updated.
 
 # Not a target:
-serial.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-simd.c:
+makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-04 15:58:19.066267505
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
-
-simd_matrix_vecotor_mul: simd_matrix_vecotor_mul.c
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Failed to be updated.
 
 # Not a target:
-threads.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-pthreads.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-queuepthreads.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-omp_threads: omp_threads.c
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'Makefile', line 14):
-	$(CC) -o omp_threads.o omp_threads.c $(CFLAGS)
-
-# Not a target:
-.SUFFIXES:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+GNUmakefile:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
 
 # files hash-table stats:
-# Load=19/1024=2%, Rehash=0, Collisions=0/42=0%
+# Load=6/1024=1%, Rehash=0, Collisions=0/15=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 49 / storage = 534 B / avg = 10 B
-# current buf: size = 8162 B / used = 534 B / count = 49 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 19 / storage = 167 B / avg = 8 B
+# current buf: size = 8162 B / used = 167 B / count = 19 / avg = 8 B
 
-# strcache performance: lookups = 73 / hit rate = 32%
+# strcache performance: lookups = 22 / hit rate = 13%
 # hash-table stats:
-# Load=49/8192=1%, Rehash=0, Collisions=0/73=0%
-# Finished Make data base on Fri Aug  5 14:38:09 2022
+# Load=19/8192=0%, Rehash=0, Collisions=0/22=0%
+# Finished Make data base on Fri Aug  5 16:01:52 2022
 
  

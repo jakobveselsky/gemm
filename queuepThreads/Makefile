@@ -7,4 +7,4 @@ clean:
 	rm -f queuepthreads.o
 
 queuepthreads: queuepthreads.c
-	$(CC) -o queuepthreads.o queuepthreads.c $(CFLAGS)
+	$(CC) buffer.c queuepthreads.c -o queuepthreads.o $(CFLAGS)
