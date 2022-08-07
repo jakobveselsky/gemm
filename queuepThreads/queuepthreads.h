@@ -14,7 +14,9 @@
 #include <getopt.h>
 
 typedef struct{
-    buffer_t* b;
+    buffer_t* input_vector;
+    buffer_t* output_vector;
+    buffer_t* scaler_list;
     int index;
     int N;
 } b_tsd_t;
