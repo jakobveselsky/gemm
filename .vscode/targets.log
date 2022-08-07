@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Aug  6 19:42:06 2022
+# Make data base, printed on Sun Aug  7 13:35:24 2022
 
 # Variables
 
@@ -32,6 +32,8 @@ PWD = /home/jakob/gemm
 %D = $(patsubst %/,%,$(dir $%))
 # environment
 XDG_DATA_DIRS = /usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+# environment
+OLDPWD = /home/jakob/.vscode-server/bin/da76f93349a72022ca4670c1b84860304616aaa2
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # automatic
@@ -47,7 +49,7 @@ MAKEFLAGS = pqrR
 # makefile
 CURDIR := /home/jakob/gemm
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # automatic
@@ -87,7 +89,7 @@ MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /home/jakob/.vscode-server/bin/3b889b090b5ad5793f524b5d1d39fda662b96a2a/bin/remote-cli:/home/jakob/.local/bin:/home/jakob/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+PATH = /home/jakob/.vscode-server/bin/da76f93349a72022ca4670c1b84860304616aaa2/bin/remote-cli:/home/jakob/.local/bin:/home/jakob/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 # default
 MAKEFILES := 
 # environment
@@ -95,7 +97,7 @@ MOTD_SHOWN = pam
 # automatic
 ^F = $(notdir $^)
 # environment
-SSH_CLIENT = 192.168.64.1 61590 22
+SSH_CLIENT = 192.168.64.1 58044 22
 # environment
 LESSCLOSE = /usr/bin/lesspipe %s %s
 # automatic
@@ -107,7 +109,7 @@ LS_COLORS =
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
-BROWSER = /home/jakob/.vscode-server/bin/3b889b090b5ad5793f524b5d1d39fda662b96a2a/bin/helpers/browser.sh
+BROWSER = /home/jakob/.vscode-server/bin/da76f93349a72022ca4670c1b84860304616aaa2/bin/helpers/browser.sh
 # environment
 LOGNAME = jakob
 # makefile
@@ -119,11 +121,11 @@ MAKE_VERSION := 4.3
 # environment
 VSCODE_AGENT_FOLDER = /home/jakob/.vscode-server
 # environment
-_ = /home/jakob/.vscode-server/bin/3b889b090b5ad5793f524b5d1d39fda662b96a2a/node
+_ = /home/jakob/.vscode-server/bin/da76f93349a72022ca4670c1b84860304616aaa2/node
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-9dc9f902-6269-4f9a-9ecb-4d4ea07f3c05.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-3e3c936f-d962-4918-a73d-eee386640763.sock
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -133,7 +135,7 @@ HOME = /home/jakob
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-XDG_SESSION_ID = 30
+XDG_SESSION_ID = 4
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -143,9 +145,9 @@ SUFFIXES :=
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # environment
-SSH_CONNECTION = 192.168.64.1 61590 192.168.64.7 22
+SSH_CONNECTION = 192.168.64.1 58044 192.168.64.7 22
 # variable set hash-table stats:
-# Load=66/1024=6%, Rehash=0, Collisions=1/93=1%
+# Load=67/1024=7%, Rehash=0, Collisions=1/94=1%
 
 # Pattern-specific Variable Values
 
@@ -211,6 +213,6 @@ GNUmakefile:
 # strcache performance: lookups = 22 / hit rate = 13%
 # hash-table stats:
 # Load=19/8192=0%, Rehash=0, Collisions=0/22=0%
-# Finished Make data base on Sat Aug  6 19:42:06 2022
+# Finished Make data base on Sun Aug  7 13:35:24 2022
 
  

@@ -16,7 +16,7 @@
 typedef struct{
     buffer_t* input_vector;
     buffer_t* output_vector;
-    buffer_t* scaler_list;
+    buffer_t* scalers_list;
     int index;
     int N;
 } b_tsd_t;
