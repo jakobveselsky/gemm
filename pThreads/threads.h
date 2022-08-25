@@ -18,9 +18,9 @@ struct entry {
 };
 
 struct Thread_info {
-  //float thread_local_matrix[1000*1000]; //creates matrix of N by N size
-  //float thread_local_input_vector[1000]; //creates vector of length N
-  //float thread_local_output_vector[1000]; //creates vector of length N
+  float thread_local_matrix[1000*1000]; //creates matrix of N by N size
+  float thread_local_input_vector[1000]; //creates vector of length N
+  float thread_local_output_vector[1000]; //creates vector of length N
   int done_multiplying;
   int index;
   int N;

@@ -3,21 +3,21 @@
 #include "queuepthreads.h" //include header for this file
 
 //global variables
-float test_matrix[1000*1000]; //creates matrix of N by N size
-float test_vector[1000]; //creates vector of length N 
-float output_vector[1000]; //creates vector of length N
+unsigned short test_matrix[256][256]; //creates matrix of N by N size
+unsigned short test_vector[1000]; //creates vector of length N 
+unsigned short output_vector[1000]; //creates vector of length N
 
 //functions
 void scaler_vector_mult_basic(int index, int N, unsigned int row_num){} //does the multiplaction
 
 void *supplier_thread_work(void *vargp){
 	volatile b_tsd_t* thread_specfic_data = (b_tsd_t *)vargp; //takes in thread specfic data and saves it locally
-	printf("hi from %d\n", thread_specfic_data->index);
+	//printf("hi from suplier %d, size %d\n", thread_specfic_data->index, thread_specfic_data->N);
 	pthread_exit(NULL);} ///exit thread/
 
 void *consumer_thread_work(void *vargp){
     volatile b_tsd_t* thread_specfic_data = (b_tsd_t *)vargp; //takes in thread specfic data and saves it locally
-    printf("hi from %d\n", thread_specfic_data->index);
+    //printf("hi from consumer %d, size %d\n", thread_specfic_data->index, thread_specfic_data->N);
     pthread_exit(NULL);} //exit thread
 
 int main(int argc, char *argv[]){
@@ -35,11 +35,26 @@ int main(int argc, char *argv[]){
 	buffer_init(&scalers_b, N/threads_num); //initalizes scalers buffer template
 	pthread_attr_init(&attr); //initalizes pthread thing
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE); //idk
-	for(int i=0; i<N; i++) {
-		output_vector[i] = 0.; //initalize output vector to zero 
-		test_vector[i] = rand(); //sets test vector to random number
-		for(int j=0; j<N; j++){ test_matrix[i*N+j] = rand(); }} //sets test matrix to random number
+	for(int i=0; i<N; i++) { output_vector[i] = 0; } //initalize output vector to zero 
 
+	//reads in matrix from file
+	FILE *f = fopen("matrix.data", "rb");
+	fread(test_matrix, sizeof(unsigned short), sizeof(test_matrix), f);
+	fclose(f);
+
+	//reads in vector from file
+	f = fopen("vector.data", "rb");
+	fread(test_vector, sizeof(unsigned short), sizeof(test_vector), f);
+	fclose(f);
+
+	//prints matrix
+    //for(int i=0; i<256; i++){
+    //    for(int j=0; j<256; j++){
+    //        printf("%i ", test_matrix[i][j]);}
+    //        printf("\n\n");}	
+
+	//prints vector
+	//for(int i=0; i<256; i++){ printf("%i ", test_vector[i]);}
 	//create threads
 	for(int i = 0; i < num_suppliers; i++){
 		thread_specifc_data[i] = (b_tsd_t){ .input_vector = &input_vector_b, .output_vector = &output_vector_b, 

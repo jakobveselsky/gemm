@@ -54,7 +54,7 @@ void *thread_work(void *vargp){
 						cpu_time_used += ((float) (end_clock - start_clock))/CLOCKS_PER_SEC*1000; 
 						cpu_time_used = cpu_time_used/NROUNDS;
 						printf("%f\n", cpu_time_used); //prints time used on matrix vector multiplaction
-						printf("Started @ %d ended @ %d\n", start_clock, end_clock);
+						printf("Started @ %ld ended @ %ld\n", start_clock, end_clock);
 						exit(0);
 					}
 				}
